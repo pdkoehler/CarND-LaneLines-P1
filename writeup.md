@@ -34,42 +34,36 @@ After removing everything outside the polygon the result was
 ![alt text][masked_edges_image]
 1. Now the Hough lines were needed.  The extracted Hough lines drawn upon the original image can be seen below
 ![alt text][raw_lines_image]
-1. The final step was to drawn the estimated 
+1. The final step was to drawn the estimated lane lines on the original image.  This consists of a few sub steps
+  1. Separating the left and right Hough lines based upon their slopes.
+  1. Selecting only viable lines, i.e. lines whose slopes remained within a certain range.
+  1. From the points that constructed the Hough lines, estimate the lines through a line fitting function.
+  1. Run these lines through a smoothing function to reduce jerky motion.
+  1. Finally, from the results of the line fitting algorithm while observing the vertices of the region of interest, the estimated left and right lane lines were constructed. This gave the result
+  ![alt text][lane_lines_image]
 
-**Finding Lane Lines on the Road**
+***
 
+## **2. Drawbacks**
 
+There are a few drawbacks which come to mind when contemplating my approach.  These were immediately observed when applying my pipeline to the *challenge*.
+* Exception handling was not considered.  Numerical issues would arise especially where the zero division would be perform.
+* The region of interest is too hard coded.  Yes, there are parameters that can be tuned to define it yet these do not provide enough freedom.  For example, I assume an *isosceles trapezoid*. Next, again after attempting the challenge, the resolution of the image dramatically affected the region of interest.
+* The *smoothing* algorithm may not be applicable for more dramatic movements.
+* The parameters for the edge and line detection were set for the first two scenarios, which present quite an ideal environment.  Changes to lighting to texture of the road managed to throw off my pipeline quite quickly.
 
+***
 
+## **3. Improvements**
 
----
-
-### Reflection
-
-### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
-
-My pipeline consisted of 5 steps. First, I converted the images to grayscale, then I ....
-
-In order to draw a single line on the left and right lanes, I modified the draw_lines() function by ...
-
-If you'd like to include images to show how the pipeline works, here is how to include an image:
-
-
-
-
-### 2. Identify potential shortcomings with your current pipeline
-
-
-One potential shortcoming would be what would happen when ...
-
-Another shortcoming could be ...
+The crux of my focus would be of course to address the aforementioned drawbacks.  These drawbacks caused my pipeline to fail with the final challenge.
 
 
-### 3. Suggest possible improvements to your pipeline
+Investing the *region of focus* and its flexibility with regards to handle different resolutions as well as lane line behavior (curves in the road) would be a start.
 
-A possible improvement would be to ...
+What would also interest me following what I witnessed in the *challenge*, would be to avoid not detecting the lines whatsoever.  The shadows did not play a crucial role in disturbing the pipeline; the texture and color of the road caused unwanted lines to be detected and the lane lines themselves not be detected. This could have resided on the parameter choice for the detection, yet the choice of these parameters may have been better determined by the image itself.
 
-Another potential improvement could be to ...
+Due to very late submission of this project, I could not spend any more time to arrive at a level were the pipeline could robustly handle all the scenarios with as little manual intervention.
 
 [//]: # (Image References)
 
@@ -78,3 +72,4 @@ Another potential improvement could be to ...
 [masked_image]: ./test_images_output/solidYellowCurve2_masked_image.jpg
 [masked_edges_image]: ./test_images_output/solidYellowCurve2_masked_image_edges.jpg
 [raw_lines_image]: ./test_images_output/solidYellowCurve2_raw_lines.jpg
+[lane_lines_image]: ./test_images_output/solidYellowCurve2_lane_line_image.jpg
