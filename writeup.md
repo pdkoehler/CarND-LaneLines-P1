@@ -35,11 +35,11 @@ After removing everything outside the polygon the result was
 1. Now the Hough lines were needed.  The extracted Hough lines drawn upon the original image can be seen below
 ![alt text][raw_lines_image]
 1. The final step was to drawn the estimated lane lines on the original image.  This consists of a few sub steps
-  1. Separating the left and right Hough lines based upon their slopes.
-  1. Selecting only viable lines, i.e. lines whose slopes remained within a certain range.
-  1. From the points that constructed the Hough lines, estimate the lines through a line fitting function.
-  1. Run these lines through a smoothing function to reduce jerky motion.
-  1. Finally, from the results of the line fitting algorithm while observing the vertices of the region of interest, the estimated left and right lane lines were constructed. This gave the result
+    1. Separating the left and right Hough lines based upon their slopes.
+    1. Selecting only viable lines, i.e. lines whose slopes remained within a certain range.
+    1. From the points that constructed the Hough lines, estimate the lines through a line fitting function.
+    1. Run these lines through a smoothing function to reduce jerky motion.
+    1. Finally, from the results of the line fitting algorithm while observing the vertices of the region of interest, the estimated left and right lane lines were constructed. This gave the result
   ![alt text][lane_lines_image]
 
 ***
